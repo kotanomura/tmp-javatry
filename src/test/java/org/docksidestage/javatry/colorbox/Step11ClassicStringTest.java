@@ -204,7 +204,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 Object content = space.getContent();
                 if (content instanceof String) {
                     String strContent = content.toString();
-                    if (matchColorName == null && strContent.startsWith(startWord)) {
+                    if (matchColorName == null || strContent.startsWith(startWord)) {
                         matchColorName = strContent;
                     }
                 }
