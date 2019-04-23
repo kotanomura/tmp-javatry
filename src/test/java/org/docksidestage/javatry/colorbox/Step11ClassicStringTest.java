@@ -168,6 +168,21 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスの中で、色の名前が一番長いものは？)
      */
     public void test_length_findMaxColorSize() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+
+        String maxColorName = null;
+
+        for (ColorBox colorBox : colorBoxList
+             ) {
+            BoxColor boxColor = colorBox.getColor();
+            String colorName = boxColor.getColorName();
+
+            if (maxColorName == null || maxColorName.length() < colorName.length()) {
+                maxColorName = colorName;
+            }
+        }
+
+        log(maxColorName);
     }
 
     // ===================================================================================
