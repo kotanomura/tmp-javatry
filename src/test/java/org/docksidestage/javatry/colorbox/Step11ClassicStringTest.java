@@ -17,6 +17,7 @@ package org.docksidestage.javatry.colorbox;
 
 import java.util.List;
 
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.docksidestage.bizfw.colorbox.ColorBox;
 import org.docksidestage.bizfw.colorbox.color.BoxColor;
 import org.docksidestage.bizfw.colorbox.space.BoxSpace;
@@ -172,8 +173,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
 
         String maxColorName = null;
 
-        for (ColorBox colorBox : colorBoxList
-             ) {
+        for (ColorBox colorBox : colorBoxList) {
             BoxColor boxColor = colorBox.getColor();
             String colorName = boxColor.getColorName();
 
@@ -193,6 +193,25 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * ("Water" で始まる文字列をしまっているカラーボックスの色は？)
      */
     public void test_startsWith_findFirstWord() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+
+        String matchColorName = null;
+        String startWord = "Water";
+
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content instanceof String) {
+                    String strContent = content.toString();
+                    if (matchColorName == null && strContent.startsWith(startWord)) {
+                        matchColorName = strContent;
+                    }
+                }
+            }
+        }
+
+        log(matchColorName);
     }
 
     /**
