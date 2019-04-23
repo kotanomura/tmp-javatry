@@ -219,6 +219,25 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * ("front" で終わる文字列をしまっているカラーボックスの色は？)
      */
     public void test_endsWith_findLastWord() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+
+        String matchColorName = null;
+        String endWord = "front";
+
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content instanceof String) {
+                    String strContent = content.toString();
+                    if (matchColorName == null || strContent.endsWith(endWord)) {
+                        matchColorName = strContent;
+                    }
+                }
+            }
+        }
+
+        log(matchColorName);
     }
 
     // ===================================================================================
