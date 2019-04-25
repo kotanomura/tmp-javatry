@@ -210,7 +210,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 if (content instanceof String) {
                     String strContent = content.toString();
                     if (matchColorName == null || strContent.startsWith(startWord)) {
-                        matchColorName = strContent;
+                        matchColorName = colorBox.getColor().toString();
                     }
                 }
             }
@@ -236,7 +236,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 if (content instanceof String) {
                     String strContent = content.toString();
                     if (matchColorName == null || strContent.endsWith(endWord)) {
-                        matchColorName = strContent;
+                        matchColorName = colorBox.getColor().toString();
                     }
                 }
             }
