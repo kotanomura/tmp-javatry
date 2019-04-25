@@ -33,7 +33,7 @@ import org.docksidestage.unit.PlainTestCase;
  * o don't fix the YourPrivateRoom class and color-box classes
  * </pre>
  * @author jflute
- * @author your_name_here
+ * @author kotanomura
  */
 public class Step11ClassicStringTest extends PlainTestCase {
 
@@ -261,7 +261,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 if (content instanceof String) {
                     String strContent = content.toString();
                     if (strContent.endsWith(targetWord)) {
-                        startWordNum = strContent.indexOf(targetWord);
+                        startWordNum = strContent.indexOf(targetWord) + 1;
                     }
                 }
             }
@@ -287,7 +287,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 if (content instanceof String) {
                     String strContent = content.toString();
                     if (strContent.contains(targetWord)) {
-                        startWordNum = strContent.lastIndexOf(targetWord);
+                        startWordNum = strContent.lastIndexOf(targetWord) + 1;
                     }
                 }
             }
@@ -306,7 +306,23 @@ public class Step11ClassicStringTest extends PlainTestCase {
     public void test_substring_findFirstChar() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
 
+        String targetWord = "front";
+        String firstWord = null;
 
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content instanceof String) {
+                    String strContent = content.toString();
+                    if (firstWord == null || strContent.endsWith(targetWord)) {
+                        firstWord = strContent.substring(0,1);
+                    }
+                }
+            }
+        }
+
+        log(firstWord + "から始まるぜ");
     }
 
     /**
@@ -314,6 +330,26 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスに入ってる "Water" で始まる文字列の最後の一文字は？)
      */
     public void test_substring_findLastChar() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+
+        String targetWord = "Water";
+        String endWord = null;
+
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content instanceof String) {
+                    String strContent = content.toString();
+                    log(strContent);
+                    if (endWord == null || strContent.startsWith(targetWord)) {
+                        endWord = strContent.substring(strContent.length()-1, strContent.length());
+                    }
+                }
+            }
+        }
+
+        log(endWord + "で終わるぜ");
     }
 
     // ===================================================================================
