@@ -127,14 +127,12 @@ public class Step11ClassicStringTest extends PlainTestCase {
             for (BoxSpace space : spaceList) {
                 Object content = space.getContent();
                 String current = content != null ? content.toString() : null;
-                if (current != null) {
-                    int currentLength = current.length();
-                    if (firstMax == null || firstMax.length() < currentLength) {
-                        secondMax = firstMax;
-                        firstMax = current;
-                    } else if (secondMax == null || secondMax.length() < currentLength) {
-                        secondMax = current;
-                    }
+                int currentLength = current != null ? current.length() : 0;
+                if (firstMax == null || firstMax.length() < currentLength) {
+                    secondMax = firstMax;
+                    firstMax = current;
+                } else if (secondMax == null || secondMax.length() < currentLength) {
+                    secondMax = current;
                 }
             }
         }
@@ -214,7 +212,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
             }
         }
 
-        log(matchColorName);
+        log(matchColorName != null ? matchColorName : "Not found match color name");
     }
 
     /**
@@ -240,7 +238,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
             }
         }
 
-        log(matchColorName);
+        log(matchColorName != null ? matchColorName : "Not found match color name");
     }
 
     // ===================================================================================
@@ -254,7 +252,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
 
         int startWordNum = 0;
-        String endWord = "front";
+        String targetWord = "front";
 
         for (ColorBox colorBox : colorBoxList) {
             List<BoxSpace> spaceList = colorBox.getSpaceList();
@@ -262,8 +260,8 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 Object content = space.getContent();
                 if (content instanceof String) {
                     String strContent = content.toString();
-                    if (strContent.endsWith(endWord)) {
-                        startWordNum = strContent.indexOf(endWord);
+                    if (strContent.endsWith(targetWord)) {
+                        startWordNum = strContent.indexOf(targetWord);
                     }
                 }
             }
@@ -277,6 +275,26 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (あなたのカラーボックスに入ってる「ど」を二つ以上含む文字列で、最後の「ど」は何文字目から始まる？ (e.g. "どんどん" => 3))
      */
     public void test_lastIndexOf_findIndex() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+
+        int startWordNum = 0;
+        String targetWord = "ど";
+
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content instanceof String) {
+                    String strContent = content.toString();
+                    log(strContent);
+
+                    startWordNum = strContent.lastIndexOf(targetWord);
+                    log(startWordNum);
+                }
+            }
+        }
+
+        log(startWordNum);
     }
 
     // ===================================================================================
