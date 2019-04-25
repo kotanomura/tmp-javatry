@@ -248,6 +248,25 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (あなたのカラーボックスに入ってる "front" で終わる文字列で、"front" は何文字目から始まる？)
      */
     public void test_indexOf_findIndex() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+
+        int startWordNum = 0;
+        String endWord = "front";
+
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content instanceof String) {
+                    String strContent = content.toString();
+                    if (strContent.endsWith(endWord)) {
+                        startWordNum = strContent.length() - endWord.length();
+                    }
+                }
+            }
+        }
+
+        log(startWordNum + "文字目");
     }
 
     /**
