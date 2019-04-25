@@ -286,15 +286,14 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 Object content = space.getContent();
                 if (content instanceof String) {
                     String strContent = content.toString();
-                    log(strContent);
-
-                    startWordNum = strContent.lastIndexOf(targetWord);
-                    log(startWordNum);
+                    if (strContent.contains(targetWord)) {
+                        startWordNum = strContent.lastIndexOf(targetWord);
+                    }
                 }
             }
         }
 
-        log(startWordNum);
+        log(startWordNum + "文字目");
     }
 
     // ===================================================================================
@@ -305,6 +304,9 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスに入ってる "front" で終わる文字列の最初の一文字は？)
      */
     public void test_substring_findFirstChar() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+
+
     }
 
     /**
