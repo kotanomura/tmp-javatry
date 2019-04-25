@@ -15,6 +15,7 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.jasper.tagplugins.jstl.core.ForEach;
@@ -316,7 +317,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 if (content instanceof String) {
                     String strContent = content.toString();
                     if (firstWord == null || strContent.endsWith(targetWord)) {
-                        firstWord = strContent.substring(0,1);
+                        firstWord = strContent.substring(0, 1);
                     }
                 }
             }
@@ -343,7 +344,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                     String strContent = content.toString();
                     log(strContent);
                     if (endWord == null || strContent.startsWith(targetWord)) {
-                        endWord = strContent.substring(strContent.length()-1, strContent.length());
+                        endWord = strContent.substring(strContent.length() - 1);
                     }
                 }
             }
@@ -360,6 +361,24 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスに入ってる "o" (おー) を含んだ文字列から "o" を全て除去したら何文字？)
      */
     public void test_replace_remove_o() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+
+        String targetWord = "o";
+
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content instanceof String) {
+                    String strContent = content.toString();
+                    if (strContent.contains(targetWord)) {
+                        String replacedContent = strContent.replace(targetWord, "");
+                        int wordCount = replacedContent.length();
+                        log("'{}'から'{}'をremove -> '{}'でwordCount is '{}'", strContent, targetWord, replacedContent, wordCount);
+                    }
+                }
+            }
+        }
     }
 
     /**
