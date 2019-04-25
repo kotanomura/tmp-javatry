@@ -119,29 +119,27 @@ public class Step11ClassicStringTest extends PlainTestCase {
     public void test_length_findSecondMax() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
 
-        String maxStr = null;
-        String second = null;
-        String third = null;
+        String firstMax = null;
+        String secondMax = null;
 
         for (ColorBox colorBox : colorBoxList) {
             List<BoxSpace> spaceList = colorBox.getSpaceList();
             for (BoxSpace space : spaceList) {
                 Object content = space.getContent();
-                if (content instanceof String) {
-                    String strContent = content.toString();
-                    if (maxStr == null || maxStr.length() < strContent.length()) {
-                        maxStr = strContent;
-                        log(maxStr);
-                    }
-
-                    if (maxStr.length() - strContent.length() == 1) {
-                        second = strContent;
+                String current = content != null ? content.toString() : null;
+                if (current != null) {
+                    int currentLength = current.length();
+                    if (firstMax == null || firstMax.length() < currentLength) {
+                        secondMax = firstMax;
+                        firstMax = current;
+                    } else if (secondMax == null || secondMax.length() < currentLength) {
+                        secondMax = current;
                     }
                 }
             }
         }
 
-        log(second);
+        log(secondMax);
     }
 
     /**
