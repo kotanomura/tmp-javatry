@@ -263,7 +263,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 if (content instanceof String) {
                     String strContent = content.toString();
                     if (strContent.endsWith(endWord)) {
-                        startWordNum = strContent.length() - endWord.length();
+                        startWordNum = strContent.indexOf(endWord);
                     }
                 }
             }
