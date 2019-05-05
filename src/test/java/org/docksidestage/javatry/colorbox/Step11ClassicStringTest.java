@@ -412,6 +412,14 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスの中に入っているDevilBoxクラスのtextの長さの合計は？)
      */
     public void test_welcomeToDevil() {
+        YourPrivateRoom.DevilBox db = new YourPrivateRoom.DevilBox("aaa");
+
+        db.wakeUp();
+        db.allowMe();
+        db.open();
+        String s = db.getText();
+        log(db.toString() + s);
+
     }
 
     // ===================================================================================
