@@ -18,6 +18,7 @@ package org.docksidestage.javatry.colorbox;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.docksidestage.bizfw.colorbox.ColorBox;
@@ -25,6 +26,7 @@ import org.docksidestage.bizfw.colorbox.color.BoxColor;
 import org.docksidestage.bizfw.colorbox.space.BoxSpace;
 import org.docksidestage.javatry.colorbox.base.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
+import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 
 /**
  * The test of String with color-box, not using Stream API. <br>
@@ -431,6 +433,23 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスの中に入っている java.util.Map を "map:{ key = value ; key = value ; ... }" という形式で表示すると？)
      */
     public void test_showMap_flat() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content instanceof java.util.Map) {
+                    StringBuilder result = new StringBuilder("map:{ ");
+                    for (Object e : ((Map) content).entrySet()) {
+                        result.append(e.toString()).append(" ; ");
+                    }
+                    result.append(" }");
+                    String r = result.toString().replace("=", " = ");
+                    log(r);
+                }
+            }
+        }
     }
 
     /**
@@ -438,6 +457,39 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスの中に入っている java.util.Map を "map:{ key = value ; key = map:{ key = value ; ... } ; ... }" という形式で表示すると？)
      */
     public void test_showMap_nested() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content instanceof java.util.Map) {
+                    Map map = (Map) content;
+                    log(get_mapString(map));
+                }
+            }
+        }
+    }
+
+    private String get_mapString(java.util.Map map) {
+        StringBuilder result = new StringBuilder("map:{ ");
+
+        for (Object k : map.keySet()) {
+            Object v = map.get(k);
+            String vStr;
+
+            if (v instanceof Map) {
+                Map vMap = (Map) v;
+                vStr = get_mapString(vMap);
+            } else {
+                vStr = v.toString();
+            }
+
+            result.append(k.toString()).append(" = ").append(vStr + " ; ");
+
+        }
+
+        return result.append("}").toString();
     }
 
     // ===================================================================================
