@@ -23,6 +23,7 @@ import java.util.Map;
 import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.docksidestage.bizfw.colorbox.ColorBox;
 import org.docksidestage.bizfw.colorbox.color.BoxColor;
+import org.docksidestage.bizfw.colorbox.impl.StandardColorBox;
 import org.docksidestage.bizfw.colorbox.space.BoxSpace;
 import org.docksidestage.javatry.colorbox.base.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
@@ -524,6 +525,18 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (whiteのカラーボックスのupperスペースに入っているSecretBoxクラスのtextをMapに変換してtoString()すると？)
      */
     public void test_parseMap_flat() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+
+        for (ColorBox colorBox : colorBoxList) {
+            if (colorBox.getColor().getColorName().equals("white")) {
+                BoxSpace upperSpace = ((StandardColorBox) colorBox).getUpperSpace();
+                Object content = upperSpace.getContent();
+                if (content instanceof YourPrivateRoom.SecretBox) {
+                    String s = ((YourPrivateRoom.SecretBox) content).getText();
+                    log(s);
+                }
+            }
+        }
     }
 
     /**
@@ -531,5 +544,25 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (whiteのカラーボックスのmiddleおよびlowerスペースに入っているSecretBoxクラスのtextをMapに変換してtoString()すると？)
      */
     public void test_parseMap_nested() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+
+        for (ColorBox cb : colorBoxList) {
+            if (cb.getColor().getColorName().equals("white")) {
+                BoxSpace middleSpace = ((StandardColorBox) cb).getMiddleSpace();
+                BoxSpace lowerSpace = ((StandardColorBox) cb).getLowerSpace();
+                Object middleSpaceContent = middleSpace.getContent();
+                Object lowerSpaceContent = lowerSpace.getContent();
+
+                if (middleSpaceContent instanceof YourPrivateRoom.SecretBox) {
+                    String ms = ((YourPrivateRoom.SecretBox) middleSpaceContent).getText();
+                    log(ms);
+                }
+
+                if (lowerSpaceContent instanceof YourPrivateRoom.SecretBox) {
+                    String ls = ((YourPrivateRoom.SecretBox) lowerSpaceContent).getText();
+                    log(ls);
+                }
+            }
+        }
     }
 }
