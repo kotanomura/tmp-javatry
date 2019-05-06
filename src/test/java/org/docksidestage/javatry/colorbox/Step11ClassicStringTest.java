@@ -414,14 +414,38 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスの中に入っているDevilBoxクラスのtextの長さの合計は？)
      */
     public void test_welcomeToDevil() {
-        YourPrivateRoom.DevilBox db = new YourPrivateRoom.DevilBox("hello devil");
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<YourPrivateRoom.DevilBox> dbs = new ArrayList<>();
+        int length_allDevilBox = 0;
 
-        db.wakeUp();
-        db.allowMe();
-        db.open();
-        String s = db.getText();
-        log(db.toString());
-        log("func getText returned '{}'.", s);
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content instanceof YourPrivateRoom.DevilBox) {
+                    dbs.add((YourPrivateRoom.DevilBox) content);
+                }
+            }
+        }
+
+        for (YourPrivateRoom.DevilBox db : dbs) {
+            db.wakeUp();
+            db.allowMe();
+            db.open();
+
+            String dbText;
+
+            try {
+                dbText = db.getText();
+            } catch (YourPrivateRoom.DevilBoxTextNotFoundException e) {
+                dbText = "";
+            }
+
+            length_allDevilBox += dbText.length();
+            log(dbText);
+        }
+
+        log("合計の長さは{}", length_allDevilBox);
 
     }
 
